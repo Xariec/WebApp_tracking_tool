@@ -1,0 +1,28 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+
+<%def name="sectors()">
+	%for x in range(len(st['leaderboard'])):
+		<tr>
+			<td>
+				${st['leaderboard'][x]['rank']}
+			</td>
+			<td>
+				${st['leaderboard'][x]['sector']}
+			</td>
+			<td>
+				${st['leaderboard'][x]['name']}
+			</td>
+		</tr>
+	%endfor
+</%def>
+
+You uploaded the Sectors at ${st['time']}
+
+<table>
+	<tr>
+		<td width="50px">Rank</td>
+		<td width="150px">Sectors</td>
+		<td width="250px">Name</td>
+	</tr>
+	${sectors()}	

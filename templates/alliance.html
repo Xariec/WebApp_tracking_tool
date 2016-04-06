@@ -1,0 +1,133 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="alliance()">
+	%for x in alliances:
+			<option value="${x}">${x}<option>
+	%endfor
+</%def>
+
+<%def name="list_sectors()">
+	<%
+		count = 0
+	%>
+	%for a in sectors.rewind():
+		<tr class="border_bottom">
+			<td width="100px">${a['x']},${a['y']}</td>
+			<td width="150px">${a['pname']}</td>
+			<td width="150px">${a['size']}</td>
+			<td width="50px">${a['type']}</td>
+			<td width="100px">${a['defense']}</td>
+			<td width="300px">${a['last_scan']}</td>
+			%if a['asp'] == "YES":
+				<td width="40px">ASP</td>
+			%endif
+			%if a['sdi'] == "YES":
+				<td width="40px">SDI</td>
+			%endif
+			%if a['wada'] == "YES":
+				<td width="40px">WADA</td>
+			%endif
+		</tr>
+		<%
+		count += 1
+		%>
+	%endfor
+	${count}
+</%def>
+
+<%def name="x_grid()">
+	%for a in range(0, 970, 100):
+		ctx.beginPath();
+		ctx.moveTo(${a},0);
+		ctx.lineTo(${a},970);
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+<%def name="y_grid()">
+	%for a in range(0, 970, 100):
+		ctx.beginPath();
+		ctx.moveTo(0,${a});
+		ctx.lineTo(970,${a});
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+
+<%def name="sector_map()">
+	%for a in sectors.rewind():
+		%if a['asp'] == "YES":
+			ctx.beginPath();
+			ctx.globalAlpha = .5;
+			ctx.rect(${a['x']*2-20}, ${a['y']*2-20},40,40);
+			ctx.fillStyle = 'green';
+			ctx.fill();
+			ctx.strokeStyle = 'green';
+			ctx.stroke();
+		%endif:
+		%if a['wada'] == "YES":
+			ctx.beginPath();
+			ctx.globalAlpha = .5;
+			ctx.rect(${a['x']*2-4}, ${a['y']*2-4},8,8);
+			ctx.fillStyle = 'orange';
+			ctx.fill();
+			ctx.strokeStyle = 'orange';
+			ctx.stroke();
+		
+
+		%endif:	
+		ctx.beginPath();
+		ctx.rect(${a['x']*2}, ${a['y']*2},2,2);
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+		ctx.strokeStyle = 'blue';
+		ctx.stroke();
+
+	%endfor
+</%def>
+<table width="1000px">
+<tr>
+<td>
+
+<fieldset>
+	<legend> Alliance Map</legend>
+		Sector Map:<br />
+			<canvas id="player_sectors" width="940" height="940" style="border:1px solid #d3d3d3;"><br />
+			Please open in Chrome to view map.
+			<script>
+				var c=document.getElementById("player_sectors");
+				var ctx=c.getContext("2d");
+				${sector_map()}
+				${x_grid()}
+				${y_grid()}
+			</script>
+</fieldset>
+<fieldset>
+	<legend> Alliance Sectors List:</legend>
+	
+		<table>
+		<tr class="border_bottom">
+			<td width="100px">X,Y</td>
+			<td width="200px">Name</td>
+			<td width="150px">Size</td>
+			<td width="50px">Type</td>
+			<td width="100px">Damage</td>
+			<td width="300px">Last Scan</td>
+		</tr>
+			${list_sectors()}
+		</table>
+</fieldset>
+
+</td>
+
+</tr>
+
+</table>

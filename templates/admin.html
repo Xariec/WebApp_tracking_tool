@@ -1,0 +1,59 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="user()">
+	%for x in range(len(access)):
+		<tr>
+			<td width="150px">${access[x][1]}</td>
+			<td>
+				<form action="" Method="POST">
+					<select name="lvl" value="test">
+		%for y in range(4):
+			<option name="${access[x][0]}" value="${y}" id="${access[x][0]}"> ${y} </option>
+		%endfor
+					</select>
+					<Input name="user" type="hidden" value=${access[x][0]}>
+					<input name="submit" type="submit" value="select">
+				</form>
+			</td>
+		</tr>
+	%endfor
+</%def>	
+
+
+<%def name="users()">
+	%for a in range(len(access)):
+		<fieldset>
+			<legend>${access[a]['username']}</legend>
+				Access : ${access[a]['access']}<br /><br />
+				
+				<form action="" Method="POST">
+					Update To:<select name="lvl" value="test">
+						%for y in range(4):
+							<option value="${y}"> ${y} </option>
+						%endfor
+					</select>
+					<Input name="user" type="hidden" value=${access[a]['_id']}>
+					<input name="submit" type="submit" value="select">
+				</form>
+		</fieldset>
+	%endfor
+</%def>
+
+<div>
+<fieldset>
+	<legend>Admin Control Panel</legend>
+		${users()}
+
+</fieldset>
+
+</div>
+
+
+</body>
+</html>

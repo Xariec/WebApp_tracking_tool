@@ -1,0 +1,73 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h1>${self.pagename()}</h1>
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+
+
+
+<%def name="collection()">
+	%for a in range(len(sectors)):
+		<fieldset >
+			<legend>${sectors[a]['x']},${sectors[a]['y']}, as of |${sectors[a]['last_update']}|</legend>
+				Player: ${sectors[a]['pname']} <br />
+				Alliance: ${sectors[a]['alliance']}<br />
+				Size: ${sectors[a]['size']} <br />
+				Type: ${sectors[a]['type']} <br />
+				Wada: ${sectors[a]['wada']} <br />
+				ASP: ${sectors[a]['asp']} <br />
+				SDI: ${sectors[a]['sdi']} <br />
+				Defense Damage: ${sectors[a]['defense']} <br />
+				Last Scan : ${sectors[a]['last_scan']}<br />
+				<fieldset>
+					<legend>Units: </legend>
+						<table>
+								%if sectors[a]['units']:
+									%for key, value in sorted(sectors[a]['units'][0].items()):
+										%if value != 0:
+											<tr>
+											<td width="150px">${key}:</td> <td width="150px">${value}</td>
+											</tr>
+										%endif
+									%endfor
+								%endif
+
+						</table>
+				</fieldset>
+				<fieldset><legend>Outbound Warps: </legend>
+						%for b in range(len(sectors[a]['outgoing_warps'])):
+							 ${sectors[a]['outgoing_warps'][b]['player']} warped to ${sectors[a]['outgoing_warps'][b]['x_dest']},${sectors[a]['outgoing_warps'][b]['y_dest']} at ${sectors[a]['outgoing_warps'][b]['time']}<br /><br />
+						%endfor
+				<br /></fieldset>
+				<fieldset><legend>Inbound Warps: </legend> 
+						%for b in range(len(sectors[a]['incoming_warps'])):
+							 ${sectors[a]['incoming_warps'][b]['player']} warped to this sector at ${sectors[a]['incoming_warps'][b]['time']}<br /><br />
+						%endfor
+				
+				<br /></fieldset>
+				
+		</fieldset>
+	%endfor
+</%def>
+
+<div>
+<br/>
+<table>
+<tr>
+<td width="500px">
+<fieldset>
+	<legend>Collection sectors.</legend>
+${collection()}
+</fieldset>
+</td>
+</tr>
+</table>
+</div>
+
+
+</body>
+</html>

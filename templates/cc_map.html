@@ -1,0 +1,171 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">
+	%endfor
+</%def>
+
+
+<%def name="new_player_sectors()">
+	
+	% if selected == "List Player Sectors":
+		%for x in range(len(sectors)):
+			%if sectors[x]['status'] == "Player":
+				<fieldset>
+				<legend>${sectors[x]['x']},${sectors[x]['y']}, Owner : ${sectors[x]['pname']}</legend>
+				Player: ${sectors[x]['pname']} <br />
+				Status: ${sectors[x]['status']} <br />
+				Size: ${sectors[x]['size']} <br />
+				Type: ${sectors[x]['type']} <br />
+				Wada: ${sectors[x]['wada']} <br />
+				ASP: ${sectors[x]['asp']} <br />
+				SDI: ${sectors[x]['sdi']} <br />
+				Scan: ${sectors[x]['scan']}
+				</fieldset><br />
+			%endif
+		%endfor
+	%elif selected == "Update Player Sectors":
+		%for x in range(len(sectors)):
+			%if sectors[x]['status'] == "Player":
+				%if sectors[x]['pname'] == "" or sectors[x]['size'] == "":
+					<form action="" method="POST">
+						<fieldset>
+							<legend>${sectors[x]['x']},${sectors[x]['y']}, Owner : ${sectors[x]['pname']}</legend>
+							
+							Name: <input list="Players" name="player">
+									<datalist id="Players">
+										<option value="${sectors[x]['pname']}" selected>
+										${options()}
+									</datalist> <br />
+							Status:<select name="status">
+									<option value = "Player">Player</option>
+									<option value = "Rebel">Rebel</option>
+									<option value = "Centrian">Cenvi</option>
+								</select> <br />
+							Size: <select name="size">
+									<option value = "${sectors[x]['size']}">${sectors[x]['size']}</option>
+									<option value = "XS">Extra Small</option>
+									<option value = "S">Small</option>
+									<option value = "M">Medium</option>
+									<option value = "L">Large</option>
+									<option value = "XL">Extra Large</option>
+									<option value = "XL+">XL+</option>
+									<option value = "XL+5">XL+5</option>
+									<option value = "XL+10">XL+10</option>
+									<option value = "XL+15">XL+15</option>
+									<option value = "XL+20">XL+20</option>
+									<option value = "Cap">Cap</option>
+									<option value = "Cap+5">Cap+5</option>
+									<option value = "Cap+10">Cap+10</option>
+									<option value = "Cap+15">Cap+15</option>
+									<option value = "Cap+20">Cap+20</option>
+									<option value = "Cap+25">Cap+25</option>
+								</select> <br />
+							Type: <select name="type">
+									<!-- <option value = "${sectors[x]['type']}">${sectors[x]['type']}</option> -->
+									<option value = "Friendly">Friendly</option>
+									<option value = "HomeWorld">HomeWorld</option>
+									<option value = "Empty">Empty</option>
+									<option value = "Teching">Teching</option>
+									<option value = "Producer">Producer</option>
+									<option value = "WarpGate">WarpGate</option>
+									<option value = "Defense">Defense</option>
+									<option value = "HomeWorld/WarpGate">HomeWorld-WarpGate</option>
+								</select> <br />
+							Wada: <select name="wada">
+									<option value = "No">No</option>
+									<option value = "Yes">Yes</option>
+									<option value = "Unknown">Unknown</option>
+									
+								</select> <br />
+							ASP: <select name="asp">
+									<option value = "No">No</option>
+									<option value = "Yes">Yes</option>
+									<option value = "Unknown">Unknown</option>
+								</select> <br />
+							SDI: <select name="sdi">
+									<option value = "No">No</option>
+									<option value = "Yes">Yes</option>
+									<option value = "Unknown">Unknown</option>
+								</select> <br />
+							Scan: <input type="text" name="scan"><br />
+							<input type="hidden" name="x" value="${sectors[x]['x']}">
+							<input type="hidden" name="y" value="${sectors[x]['y']}">
+							<input type="submit" name="submit" value="Update Sector"><br />
+						</fieldset>
+					</form>
+					<br />
+				%endif:
+				
+			%endif	
+		%endfor
+	% elif selected == "List Rebel Sectors":
+		%for x in range(len(sectors)):
+			%if sectors[x]['status'] == "Rebel":
+				<fieldset>
+				<legend>${sectors[x]['x']},${sectors[x]['y']}, Owner : ${sectors[x]['pname']}</legend>
+					Player: ${sectors[x]['pname']} <br />
+					Status: ${sectors[x]['status']} <br />
+					Size: ${sectors[x]['size']} <br />
+					Updates: ${sectors[x]['updates']} <br />
+				</fieldset><br />
+			%endif
+		%endfor	
+	%endif
+</%def>
+
+
+
+<%def name="time_field()">
+	%for x in range(len(map_time)):
+		<option value="${map_time[x]}">${map_time[x]}</option>
+	%endfor
+</%def>
+
+<table>
+<tr>
+<td width="500px">
+<div><p> Welcome to the CC Map page. Below you will find two drop down's with lists of times. The first one is a previous time you would like to look back to, and the second one is a more current time you would like to look up to. This will allow you to view all sector changes that happened on the map during the time periods you select. The primary use for this tool is to show player movement that can't be tracked with warp logs. ALso if there was a lot of movement on one day, you will be able to go back and revisit the sectors that were captured that day.<br/>
+	Each day I will try my best to upload the AM map and the PM map. The map is updated at midnight and noon every day PST. So when looking at the map options, remember that it is for the PST time zone.
+	
+	Once you submit the time zones, after a few moments, a list of new sectors will appear. Ones that have the location and an Owner name on the border have already been updated and can be viewed better on teh CC Sectors page. If there is just the location information, then that sector is missing the additional data. If you have time, please update as many as possible each day, remember to account for the AM and the PM.
+	</p>
+</td>
+</tr>
+<tr>
+<td  width="500px">
+<fieldset class="fieldset-auto-width">
+	<legend> Map Snapshot Times </legend>
+		<center><form action="" method="POST" id="times">
+			Previous Time: <select name="time1">
+				${time_field()}
+			</select><br /><br /><br />
+			Current Time: <select name="time2">
+				${time_field()}
+			</select><br /><br /><br />
+			<input type="submit" name="submit" value="List Player Sectors">
+			<input type="submit" name="submit" value="Update Player Sectors">
+			<input type="submit" name="submit" value="List Rebel Sectors">
+			</center>
+		</form>
+</fieldset>
+<br /><br /><br /><br />
+<fieldset  class="fieldset-auto-width">
+<legend> Sector Intel</legend>
+
+${new_player_sectors()}
+
+
+</fieldset>
+</td>
+</tr>
+</table>
+
+

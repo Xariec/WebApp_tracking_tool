@@ -1,0 +1,23 @@
+<%inherit file="base.html"/>
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">${players[x]}</option>
+	%endfor
+</%def>
+
+
+
+<br> <br>
+
+
+		<fieldset class="fieldset-auto-width">
+			<legend> View Single Player Intel:</legend>
+				<form action="" method="POST">
+					<select name="player">
+							${options()}
+						</select> 
+					<input type="submit" name="submit" value="View Player">
+
+				</form>
+		</fieldset>

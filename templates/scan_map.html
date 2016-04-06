@@ -1,0 +1,80 @@
+<%inherit file="base.html"/>
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+	
+
+
+
+<%def name="scanned_sectors()">
+	%for a in range(len(scanned)):
+		ctx.beginPath();
+		ctx.rect(${scanned[a]['x']}*2, ${scanned[a]['y']}*2,2,2);
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+		ctx.strokeStyle = 'blue';
+		ctx.stroke();
+		
+	%endfor
+</%def>
+<%def name="unscanned_sectors()">
+	%for a in range(len(unscanned)):
+		ctx.beginPath();
+		ctx.rect(${unscanned[a]['x']}*2, ${unscanned[a]['y']}*2,2,2);
+		ctx.fillStyle = 'black';
+		ctx.fill();
+		ctx.strokeStyle = 'black';
+		ctx.stroke();
+		
+	%endfor
+</%def>
+
+<%def name="x_grid()">
+	%for a in range(0, 940, 100):
+		ctx.beginPath();
+		ctx.moveTo(${a},0);
+		ctx.lineTo(${a},940);
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+<%def name="y_grid()">
+	%for a in range(0, 940, 100):
+		ctx.beginPath();
+		ctx.moveTo(0,${a});
+		ctx.lineTo(940,${a});
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+
+<fieldset>
+			<legend>Scan Map</legend>
+					<canvas id="compare" width="940" height="940" style="border:1px solid #d3d3d3;"><br />
+		Please open in Chrome to view map.
+		<script>
+			window.onload = function() {
+				var c=document.getElementById("compare");
+				var ctx=c.getContext("2d");
+				
+				ctx.save();
+				ctx.globalAlpha = 0.15;
+				ctx.rect(0,0,940, 940);
+				ctx.fillStyle = "red";
+				ctx.fill();
+				ctx.restore();
+				${scanned_sectors()}
+				${unscanned_sectors()}
+				${x_grid()}
+				${y_grid()}
+
+				
+				
+			};
+		</script>
+		
+		</fieldset>

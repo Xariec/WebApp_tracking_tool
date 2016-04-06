@@ -1,0 +1,453 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">
+	%endfor
+</%def>
+
+
+<%def name="sectorRange()">
+	<%
+		x=5
+		y=5
+	%>
+	%for a in sector_range.rewind():
+		ctx.font="10px Terminal";
+
+		ctx.beginPath();
+		ctx.rect(${(a['x']-sector['x']+x)*100},${(a['y']-sector['y']+y)*100},100,100);
+
+		%if a['pname'] != "" and a['pname'] == sector['pname']:
+			ctx.fillStyle = 'darkgreen';
+			ctx.fill();
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font="10px Terminal";
+			ctx.fillStyle = 'white';
+			ctx.fillText("${a['x']},${a['y']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+10);
+			ctx.fillText("${a['pname']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+25);
+			ctx.fillText("${a['size']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+40);
+			ctx.fillText("Defense :${a['defense']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+55);
+			ctx.fillText("${a['type']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+70);
+			ctx.fillText("${a['last_scan']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+90);
+		%elif a['status'] == "Player":
+			ctx.fillStyle = 'darkblue';
+			ctx.fill();
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font="10px Terminal";
+			ctx.fillStyle = 'white';
+			ctx.fillText("${a['x']},${a['y']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+10);
+			ctx.fillText("${a['pname']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+25);
+			ctx.fillText("${a['size']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+40);
+			ctx.fillText("Defense :${a['defense']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+55);
+			ctx.fillText("${a['type']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+70);
+			ctx.fillText("${a['last_scan']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+90);
+		%elif a['status'] == "Rebel":
+			ctx.fillStyle = 'darkred';
+			ctx.fill();
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font="10px Terminal";
+			ctx.fillStyle = 'white';
+			ctx.fillText("${a['x']},${a['y']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+10);
+			ctx.fillText("${a['size']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+40);
+			
+		%elif a['status'] == "Centrian":
+			ctx.fillStyle = 'lightskyblue';
+			ctx.fill();
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font="10px Terminal";
+			ctx.fillStyle = 'white';
+			ctx.fillText("${a['x']},${a['y']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+10);
+			ctx.fillText("${a['size']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+40);
+		%else:
+			ctx.fillStyle = 'black';
+			ctx.fill();
+			ctx.font="10px Terminal";
+			ctx.fillStyle = 'white';
+			ctx.fillText("${a['x']},${a['y']}",${(a['x']-sector['x']+5)*100}+2,${(a['y']-sector['y']+5)*100}+10);
+
+		%endif
+		
+	%endfor
+
+</%def>
+
+
+<%def name="grid()">
+	%for a in range(0, 1100, 100):
+		ctx.beginPath();
+		ctx.moveTo(${a},0);
+		ctx.lineTo(${a},1100);
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+
+	%for a in range(0, 1100, 100):
+		ctx.beginPath();
+		ctx.moveTo(0,${a});
+		ctx.lineTo(1100,${a});
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+
+
+
+<%def name="update_sector()">
+
+		<form action="" method="POST">
+			<fieldset>
+				<legend>Update:</legend>
+				
+				Name: <input list="Players" name="player">
+						<datalist id="Players">
+							${options()}
+						</datalist> <br />
+				Size: <select name="size">
+						<option value = "${sector['size']}">${sector['size']}</option>
+						<option  value="XL +9">XL +9</option>
+						<option  value="XL +8">XL +8</option>
+						<option  value="XL +7">XL +7</option>
+						<option  value="XL +6">XL +6</option>
+						<option  value="XL +5">XL +5</option>
+						<option  value="XL +4">XL +4</option>
+						<option  value="XL +3">XL +3</option>
+						<option  value="XL +24">XL +24</option>
+						<option  value="XL +20">XL +20</option>
+						<option  value="XL +2">XL +2</option>
+						<option  value="XL +18">XL +18</option>
+						<option  value="XL +16">XL +16</option>
+						<option  value="XL +15">XL +15</option>
+						<option  value="XL +14">XL +14</option>
+						<option  value="XL +13">XL +13</option>
+						<option  value="XL +11">XL +11</option>
+						<option  value="XL +10">XL +10</option>
+						<option  value="XL +1">XL +1</option>
+						<option  value="XL +">XL +</option>
+						<option  value="Small">Small</option>
+						<option  value="Medium">Medium</option>
+						<option  value="Large">Large</option>
+						<option  value="Extra Small">Extra Small</option>
+						<option  value="Extra Large">Extra Large</option>
+						<option  value="Capital">Capital</option>
+						<option  value="CAP +5">CAP +5</option>
+						<option  value="CAP +45">CAP +45</option>
+						<option  value="CAP +30">CAP +30</option>
+						<option  value="CAP +25">CAP +25</option>
+						<option  value="CAP +20">CAP +20</option>
+						<option  value="CAP +15">CAP +15</option>
+						<option  value="CAP +10">CAP +10</option>
+					</select> <br />
+					Status:<select name="status">
+							<option value = "Player">Player</option>
+							<option value = "Rebel">Rebel</option>
+							<option value = "Centrian">Cenvi</option>
+						</select> <br />
+				Type: <select name="type">
+						<option value = "${sector['type']}">${sector['type']}</option>
+						<option value = "Friendly">Friendly</option>
+						<option value = "HomeWorld">HomeWorld</option>
+						<option value = "Empty">Empty</option>
+						<option value = "Teching">Teching</option>
+						<option value = "Producer">Producer</option>
+						<option value = "WarpGate">WarpGate</option>
+						<option value = "Defense">Defense</option>
+						<option value = "HomeWorld/WarpGate">HomeWorld/WarpGate</option>
+					</select> <br />
+				Corporate: <select name="CF">
+						<option value = "${sector['corporate_factory']}">${sector['corporate_factory']}</option>
+						<option value = "NO">NO</option>
+						<option value = "YES">YES</option>
+						
+					</select> <br />
+				Wada: <select name="wada">
+						<option value = "${sector['wada']}">${sector['wada']}</option>
+						<option value = "NO">NO</option>
+						<option value = "YES">YES</option>
+						<option value = "Unknown">Unknown</option>
+						
+					</select> <br />
+				ASP: <select name="asp">
+						<option value = "${sector['asp']}">${sector['asp']}</option>
+						<option value = "NO">NO</option>
+						<option value = "YES">YES</option>
+						<option value = "Unknown">Unknown</option>
+					</select> <br />
+				SDI: <select name="sdi">
+				<option value = "${sector['sdi']}">${sector['sdi']}</option>
+						<option value = "NO">NO</option>
+						<option value = "YES">YES</option>
+						<option value = "Unknown">Unknown</option>
+					</select> <br />
+				Preserve Scan: <select name="preserve">
+						<option value = "YES">YES</option>
+						<option value = "NO">NO</option>
+					</select><br />
+				<input type="hidden" name="x" value="${sector['x']}">
+				<input type="hidden" name="y" value="${sector['y']}">
+				<input type="submit" name="submit" value="Update Sector"><br />
+			</fieldset>
+		</form>
+		<br />
+</%def>
+
+
+<%def name="battles()">
+	<%
+		battles = sector['battles']
+		battles = sorted(battles, key = lambda battles:battles['time'], reverse = True)
+	%>
+	
+	%for a in battles:
+		<tr class="border_bottom">
+			<td width="200px">  ${a['time']}</td>
+			<td width="200px">   ${a['attacker']}</td>
+			<td width="200px">  ${a['defender']}</td>
+			<td width="75px"> ${a['outcome']}</td>
+		</tr>
+
+	%endfor
+
+</%def>
+
+
+<%def name="updates()">
+	<%
+		updates = sector['updates']
+		updates = sorted(updates, key = lambda updates:updates['time'], reverse = True)
+	%>
+	
+	%for a in updates:
+		<tr class="border_bottom">
+			<td width="200px">  ${a['time']}</td>
+			<td width="75">   ${a['status']}</td>
+			<td width="200px">  ${a['player']}</td>
+			<td width="75px"> ${a['source']}</td>
+		</tr>
+
+	%endfor
+
+</%def>
+
+
+<%def name="incoming_warps()">
+	<%
+		warps = sector['incoming_warps']
+		warps = sorted(warps, key = lambda warps:warps['time'], reverse = True)
+	%>
+		%for a in warps:
+		<tr class="border_bottom">
+			<td width="200px">  ${a['time']}</td>
+			<td width="200">   ${a['player']}</td>
+			<td width="75px">  ${a['x_origin']},${a['y_origin']}</td>
+
+	%endfor
+
+</%def>
+
+
+<%def name="outgoing_warps()">
+	<%
+		warps = sector['outgoing_warps']
+		warps = sorted(warps, key = lambda warps:warps['time'], reverse = True)
+	%>
+		%for a in warps:
+		<tr class="border_bottom">
+			<td width="200px">  ${a['time']}</td>
+			<td width="200">   ${a['player']}</td>
+			<td width="75px">  ${a['x_dest']},${a['y_dest']}</td>
+
+	%endfor
+
+</%def>
+
+<%def name="unit_count()">
+	%if sector['units']:
+		%for key, value in sorted(sector['units'][0].items()):
+			%if value != 0:
+				<tr>
+				<td width="150px">${key}:</td> <td width="150px">${value}</td>
+				</tr>
+			%endif
+		%endfor
+	%endif
+</%def>
+
+
+
+<table>
+	<tr>
+		<td width="800px">
+
+		<fieldset>
+			<legend> View sector:</legend>
+				<form action="" method="POST">
+					X,Y:<input type="tel" name="xy" size="3"><input type="submit" name="submit" value="Sector Intel">
+				</form>
+		</fieldset>
+		
+		</td>
+	</tr>
+	<tr>
+		<td width="800px">
+		
+		
+	
+<fieldset>
+	<legend>${sector['x']},${sector['y']} info as of ${sector['last_update']}</legend>
+
+				%if sector['status'] == "Player":
+					%if access > 1:
+							<table>
+								<tr>
+									<td width = "600px">
+										Player: ${sector['pname']} <br />
+										Alliance: ${sector['alliance']}<br />
+										Size: ${sector['size']} <br />
+										Type: ${sector['type']} <br />
+										Corporate Factory: ${sector['corporate_factory']} <br />
+										Wada: ${sector['wada']} <br />
+										ASP: ${sector['asp']} <br />
+										SDI: ${sector['sdi']} <br />
+										Defense Damage: ${sector['defense']} <br />
+										Last Scan : ${sector['last_scan']}<br />
+									</td>
+									<td width = "400px">
+									${update_sector()}
+									</td>
+								</tr>
+							</table>
+						<fieldset>
+							<legend>Sector Area</legend>
+								<canvas id="player_sectors" width="1100" height="1100" style="border:1px solid #d3d3d3;"><br />
+									Please open in Chrome to view map.
+									<script>
+										var c=document.getElementById("player_sectors");
+										var ctx=c.getContext("2d");
+										${sectorRange()}
+										${grid()}
+									</script>
+						</fieldset>
+					%else:
+						Player: ${sector['pname']} <br />
+						Alliance: ${sector['alliance']}<br />
+						Size: ${sector['size']} <br />
+						Type: ${sector['type']} <br />
+						Corporate Factory: ${sector['corporate_factory']} <br />
+						Wada: ${sector['wada']} <br />
+						ASP: ${sector['asp']} <br />
+						SDI: ${sector['sdi']} <br />
+						Defense Damage: ${sector['defense']} <br />
+						Last Scan : ${sector['last_scan']}<br />
+						<fieldset>
+							<legend>Sector Area</legend>
+								Level 2 is required to view the sector area map.
+						</fieldset>
+					%endif
+					<fieldset>
+						<legend>Units: </legend>
+							<table>
+								${unit_count()}
+							</table>
+					</fieldset>
+					<fieldset>
+						<legend>Updates: </legend> 
+							<table>
+								<tr class="border_bottom">
+									<td> Time</td>
+									<td> Status</td>
+									<td> Player</td>
+									<td> Source</td>
+								</tr>
+									${updates()}
+							</table>
+					
+					</fieldset>
+					<fieldset>
+						<legend>Battles: </legend> 
+							<table>
+								<tr class="border_bottom">
+									<td> Time</td>
+									<td> Attacker</td>
+									<td> Defender</td>
+									<td> Outcome</td>
+								</tr>
+									${battles()}
+							</table>
+					
+					</fieldset>
+					<fieldset>
+						<legend>Inbound Warps: </legend>
+							<table>
+								<tr class="border_bottom">
+									<td> Time</td>
+									<td> Player</td>
+									<td> Origin</td>
+								</tr>
+									${incoming_warps()}
+							</table>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Outbound Warps: </legend>
+							%if access > 1:
+								<table>
+									<tr class="border_bottom">
+										<td> Time</td>
+										<td> Player</td>
+										<td> Destination</td>
+									</tr>
+										${outgoing_warps()}
+								</table>
+							%else:
+								Level 2 required to view outbound warps
+							%endif
+					</fieldset>
+				% else:
+					Status: ${sector['status']} <br />
+					Size: ${sector['size']} <br />
+					<fieldset>
+						<legend>Updates: </legend> 
+							<table>
+								<tr>
+									<td> Time</td>
+									<td> Status</td>
+									<td> Player</td>
+									<td> Source</td>
+									<td> User</td>
+								</tr>
+									${updates()}
+							</table>
+					
+					</fieldset>
+					%if access > 1:
+						<fieldset>
+							<legend>Sector Area</legend>
+								<canvas id="player_sectors" width="1100" height="1100" style="border:1px solid #d3d3d3;"><br />
+									Please open in Chrome to view map.
+									<script>
+										var c=document.getElementById("player_sectors");
+										var ctx=c.getContext("2d");
+										${sectorRange()}
+										${grid()}
+									</script>
+						</fieldset>
+					%endif
+					
+				%endif
+				</fieldset>
+	</tr>
+
+</table>

@@ -1,0 +1,49 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+
+
+<%def name="score()">
+	%for x in score_time:
+		<option value="${x['time']}">${x['time']}</option>
+	%endfor
+</%def>
+
+
+
+<%def name="pscores()">
+	%for x in range(len(scores['leaderboard'])):
+		<tr>
+			<td>
+				${scores['leaderboard'][x]['rank']}
+			</td>
+			<td>
+				${scores['leaderboard'][x]['score']}
+			</td>
+			<td>
+				${scores['leaderboard'][x]['name']}
+			</td>
+		</tr>
+	%endfor
+</%def>
+
+		
+		<fieldset class="fieldset-auto-width">
+			<legend> View Score Changes:</legend>
+				<form action="" method="POST">
+					<select name="score_time">
+							${score()}
+						</select> 
+					<input type="submit" name="submit" value="Score Changes">
+
+				</form>
+		</fieldset>
+		
+
+
+<table>
+	<tr>
+		<td width="50px">Rank</td>
+		<td width="150px">Score</td>
+		<td width="250px">Name</td>
+	</tr>
+	${pscores()}	

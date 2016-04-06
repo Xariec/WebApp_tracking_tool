@@ -1,0 +1,61 @@
+<%inherit file="base.html"/>
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="x_grid()">
+	%for a in range(0, 9400, 1000):
+		ctx.beginPath();
+		ctx.moveTo(${a},0);
+		ctx.lineTo(${a},9400);
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+<%def name="y_grid()">
+	%for a in range(0, 9400, 1000):
+		ctx.beginPath();
+		ctx.moveTo(0,${a});
+		ctx.lineTo(9400,${a});
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+
+<%def name="sectorMap()">
+					
+	%for a in sectors:
+		%if a['status'] == "Player":
+			ctx.beginPath();
+			ctx.rect(${a['x']}*20-10, ${a['y']}*20-10,20,20);
+			ctx.fillStyle = 'blue';
+			ctx.fill();
+			ctx.strokeStyle = 'blue';
+			ctx.stroke();
+		%endif
+	%endfor
+	
+</%def>
+
+<fieldset>
+			<legend>Scan Map</legend>
+					<canvas id="compare" width="9400" height="9400" style="border:1px solid #d3d3d3;"><br />
+		Please open in Chrome to view map.
+		<script>
+			window.onload = function() {
+				var c=document.getElementById("compare");
+				var ctx=c.getContext("2d");
+				${sectorMap()}
+				${x_grid()}
+				${y_grid()}
+				
+				
+				
+			};
+		</script>
+		
+		</fieldset>

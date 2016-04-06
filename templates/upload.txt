@@ -1,0 +1,42 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h1>${self.pagename()}</h1>
+
+
+<%def name="users()">
+	%for x in range(len(access)):
+		<tr>
+			<td width="150px">${access[x][1]}</td>
+			<td>
+				<form action="" Method="POST">
+					<select name="lvl" value="test">
+		%for y in range(4):
+			<option name="${access[x][0]}" value="${y}" id="${access[x][0]}"> ${y} </option>
+		%endfor
+					</select>
+					<Input name="user" type="hidden" value=${access[x][0]}>
+					<input name="submit" type="submit" value="select">
+				</form>
+			</td>
+		</tr>
+	%endfor
+</%def>	
+
+
+
+<h3>Logged in as ${user['username']}</h3><br />
+<div>
+
+${users()}
+
+
+
+</div>
+
+
+</body>
+</html>
+
+<%def name="pagename()">
+All Warp Gates
+</%def>

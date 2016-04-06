@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>${self.sitename()} | ${self.pagename()}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="/static/css/new_v1.3.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    </head>  
+	
+    <body class="twoColElsLt" vlink="#d3d3d3">
+        <div id="container">
+          <header>
+            <div class="inner">
+              <nav id="sidebar1">
+				<br />
+				<br />
+                <ul>
+				  % if user is not UNDEFINDED and user:
+				  <li><a href="/">Home</a></li>
+				  <li><a href="/intelViewer/">Intel Viewer</a></li>
+				  <li><a href="/upload/">Intel Upload</a></li>
+				  <li><a href="/dbInteractions/">DB Interactions</a></li>
+				  <li><a href="/admin/">Admin</a></li>
+				  <li><a href="/logout/">Logout</a></li>
+
+				  
+				  % else:
+				  <li><a href="/login/">Login</a></li>
+                  <li><a href="/register/">Register</a></li>
+				  % endif
+                </ul>
+              </nav>
+            </div>
+          </header>
+        <section>
+          <div class="inner">
+            ${next.body()}
+          </div>
+        </section>
+      </div>
+	  <script>
+	  			$('legend').click(function() {
+				console.log("Clicked");
+				$('fieldset').toggleClass('close');
+			});
+		</script>
+    </body>
+</html>
+
+      
+<%def name="pagename()"></%def>
+
+<%def name="bodyclass()">${self.pagename()}</%def>
+
+<%def name="sitename()">UWS Tracking</%def>
+
+<%def name="errormsg(field)">
+    % if errors is not UNDEFINED and errors and  field in errors:
+        <p class="form_field_error">${errors[field]}</p>
+    % endif
+</%def>
+<%def name="userlink(username)">
+<a href="/users/${username}/" title="${username}">${username}</a>
+</%def>

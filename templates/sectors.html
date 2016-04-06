@@ -1,0 +1,49 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+
+
+<%def name="sectorTime()">
+	%for x in sector_time:
+			<option value="${x}">${x}</option>
+	%endfor
+</%def>
+
+
+
+<%def name="sector()">
+	%for x in range(len(sectors['leaderboard'])):
+		<tr>
+			<td>
+				${sectors['leaderboard'][x]['rank']}
+			</td>
+			<td>
+				${sectors['leaderboard'][x]['sector']}
+			</td>
+			<td>
+				${sectors['leaderboard'][x]['name']}
+			</td>
+		</tr>
+	%endfor
+</%def>
+
+		
+		<fieldset class="fieldset-auto-width">
+			<legend> View Sector Changes:</legend>
+				<form action="" method="POST">
+					<select name="sector_time">
+							${sectorTime()}
+						</select> 
+					<input type="submit" name="submit" value="Sector Changes">
+
+				</form>
+		</fieldset>
+		
+
+
+<table>
+	<tr>
+		<td width="50px">Rank</td>
+		<td width="150px">Score</td>
+		<td width="250px">Name</td>
+	</tr>
+	${sector()}	

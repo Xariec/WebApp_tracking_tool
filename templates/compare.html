@@ -1,0 +1,95 @@
+<%inherit file="base.html"/>
+
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">${players[x]}</option>
+	%endfor
+</%def>
+
+
+
+
+<%def name="player_map()">
+	%for a in range(len(p1)):
+		ctx.beginPath();
+		ctx.rect(${p1[a]['x']}*2, ${p1[a]['y']}*2,2,2);
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+		ctx.strokeStyle = 'blue';
+		ctx.stroke();
+		
+	%endfor
+</%def>
+
+<%def name="unknown()">
+	%for a in range(len(p2)):
+		ctx.beginPath();
+		ctx.rect(${p2[a]['x']}*2, ${p2[a]['y']}*2,2,2);
+		ctx.fillStyle = 'green';
+		ctx.fill();
+		ctx.strokeStyle = 'green';
+		ctx.stroke();
+		
+	%endfor
+</%def>
+
+
+<%def name="x_grid()">
+	%for a in range(0, 970, 100):
+		ctx.beginPath();
+		ctx.moveTo(${a},0);
+		ctx.lineTo(${a},970);
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+<%def name="y_grid()">
+	%for a in range(0, 970, 100):
+		ctx.beginPath();
+		ctx.moveTo(0,${a});
+		ctx.lineTo(970,${a});
+		ctx.globalAlpha = 0.25;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+	%endfor
+</%def>
+
+		<fieldset class="fieldset-auto-width">
+			<legend> Compare Two players:</legend>
+				<form action="" method="POST">
+					<select name="player1">
+						<option  value="${player1}">${player1}</option>
+							${options()}
+						</select> 
+					<select name="player2">
+						<option  value="${player2}">${player2}</option>
+							${options()}
+						</select> 
+					<input type="submit" name="submit" value="Compare Players">
+
+				</form>
+		</fieldset>
+		
+
+
+<fieldset>
+			<legend>Compare Map</legend>
+			Blue sectors are ${player1}, green sectors are ${player2}. Each block is 50,50.
+					<canvas id="compare" width="940" height="940" style="border:1px solid #d3d3d3;"><br />
+		Please open in Chrome to view map.
+		<script>
+			window.onload = function() {
+				var c=document.getElementById("compare");
+				var ctx=c.getContext("2d");
+				${player_map()}
+				${unknown()}
+				${x_grid()}
+				${y_grid()}
+				
+				
+			};
+		</script>
+		
+		</fieldset>

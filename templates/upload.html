@@ -1,0 +1,102 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h1>${self.pagename()}</h1>
+
+
+<div>
+<table>
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Warps:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		<input type="file" name="myfile" />
+		<br/><br/>
+		<input type="submit" name="submit" value="Upload Warps" />
+		</form>
+</fieldset>
+<br />
+</td>
+</tr>
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Scans:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		<input type="file" name="myfile" />
+		<br/><br/>
+		<input type="submit" name="submit" value="Upload Scans" />
+		</form>
+</fieldset>
+<br />
+</td>
+</tr>
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Score:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		<input type="file" name="myfile" />
+		<br/><br/>
+		<input type="submit" name="submit" value="Upload Score" />
+		</form>
+</fieldset>
+<br />
+</td>
+</tr>
+
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Sector Changes:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		<input type="file" name="myfile" />
+		<br/><br/>
+		<input type="submit" name="submit" value="Upload Sectors" />
+		</form>
+</fieldset>
+<br />
+</td>
+</tr>
+
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Battle Reports:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		<input type="file" name="myfile" />
+		<br/><br/>
+		<input type="submit" name="submit" value="Upload Battles" />
+		</form>
+</fieldset>
+<br />
+</td>
+</tr>
+<tr>
+<td width="500px">
+<fieldset>
+	<legend> Upload Map:</legend>
+<form method="POST" enctype="multipart/form-data" action="">
+		For uploading a Map Image, please use the following time stamp "12-22-2014_AM/PM" depending on when the map is referencing.
+		The Map is 12 hours behind so if you grab a screenshot at 1:00PM, the map you are seeing is from the AM time period of the same day.
+		If you grab a screen shot before noon, then the map is of the PM period of the previous day.<br /><br /><br />
+		<fieldset>
+			<legend>Last Upload: ${last_map}</legend>
+		<center>Time Stamp for map:<input type="text" name="utime"><br />
+		File:<input type="file" name="myfile" />
+		<br/>
+		<input type="submit" name="submit" value="Upload Map" /></center>
+		</form>
+		</fieldset>
+</fieldset>
+</div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+
+<%def name="pagename()">
+Upload
+</%def>

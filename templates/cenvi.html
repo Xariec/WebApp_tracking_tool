@@ -1,0 +1,32 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+
+
+
+<%def name="centrian()">
+	%for a in cenvi:
+		<fieldset>
+			<legend>${a['x']},${a['y']}</legend>
+			Size : ${a['size']}<br />
+			last Update : ${a['last_update']}<br />
+			<fieldset>
+				<legend> Updates</legend>
+					%for b in a['updates']:
+						<fieldset>
+							<legend>${b['time']}</legend>
+								Status : ${b['status']} <br />  Player : ${b['player']} <br />  Source : ${b['source']} <br />  User : ${b['user']}
+						</fieldset>
+					%endfor
+
+			</fieldset>
+			
+		</fieldset>
+	%endfor
+	
+</%def>
+
+
+<fieldset>
+	<legend> Centrian Sectors</legend>
+		${centrian()}
+</fieldset>

@@ -1,0 +1,134 @@
+<%inherit file="base.html"/>
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">${players[x]}</option>
+	%endfor
+</%def>
+
+<%def name="alliance()">
+	%for x in alliances:
+			<option value="${x}">${x}</option>
+	%endfor
+</%def>
+
+<%def name="score()">
+	%for x in score_time:
+			<option value="${x}">${x}</option>
+	%endfor
+</%def>
+
+<%def name="sectors()">
+	%for x in sector_time:
+			<option value="${x}">${x}</option>
+	%endfor
+</%def>
+
+
+
+<table>
+	<tr> 
+		<td width="500px">
+		
+<br />
+<div><p>Welcome to the UWS CC Intel Page. Below is a list of selectors for the information you would like to either view or update.</p>	
+	
+<fieldset class="fieldset-auto-width">
+	<legend>Intel Selection:</legend>
+	
+	
+		<fieldset class="fieldset-auto-width">
+			<legend> View Single Player:</legend>
+				<form action="" method="POST">
+					<select name="player">
+							${options()}
+						</select> 
+					<input type="submit" name="submit" value="View Player">
+
+				</form>
+		</fieldset>
+	
+	
+		<fieldset class="fieldset-auto-width">
+			<legend> View Alliance:</legend>
+				<form action="" method="POST">
+					<select name="alliance">
+							${alliance()}
+						</select> 
+					<input type="submit" name="submit" value="View Alliance">
+
+				</form>
+		</fieldset>
+		
+		
+		<fieldset class="fieldset-auto-width">
+			<legend> View Player Scores:</legend>
+				<form action="" method="POST">
+					<select name="score_time">
+							${score()}
+						</select> 
+					<input type="submit" name="submit" value="Score Changes">
+
+				</form>
+		</fieldset>
+				
+		<fieldset class="fieldset-auto-width">
+			<legend> View Sector Changes:</legend>
+				<form action="" method="POST">
+					<select name="sector_time">
+							${sectors()}
+						</select> 
+					<input type="submit" name="submit" value="Sector Changes">
+
+				</form>
+		</fieldset>
+		
+		
+		<fieldset class="fieldset-auto-width">
+			<legend> Compare Two players:</legend>
+				<form action="" method="POST">
+					<select name="player1">
+							${options()}
+						</select> <br>
+					<select name="player2">
+							${options()}
+						</select> 
+					<input type="submit" name="submit" value="Compare Players">
+
+				</form>
+		</fieldset>
+		
+		<fieldset class="fieldset-auto-width">
+			<legend> View sector:</legend>
+				<form action="" method="POST">
+					X,Y:<input type="text" name="xy" size="3"><input type="submit" name="submit" value="Sector Intel">
+				</form>
+		</fieldset>		
+		
+
+
+
+
+
+
+
+
+
+
+
+		
+</fieldset>		
+		</td>
+	</tr>
+</table>
+		
+
+
+

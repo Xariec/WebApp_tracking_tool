@@ -1,0 +1,95 @@
+<%inherit file="base.html"/>
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="pnames()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">${players[x]}</option>
+	%endfor
+</%def>
+
+
+<%def name="sector_sizes()">
+	%for x in range(len(sizes)):
+		<option  value="${sizes[x]}">${sizes[x]}</option>
+	%endfor
+</%def>
+
+<%def name="hwList()">
+	%for a in hw:
+		<option value="${a}">${a}</option>
+	%endfor
+	
+</%def>
+	
+<fieldset class="fieldset-auto-width">
+		<legend> View DB Intel:</legend>
+		
+		<fieldset>
+			<legend>DB Queries</legend>
+				<form action="" method="POST">
+					Player Name: <select name="pname">
+						<option value="Null">N/A</option>
+						${pnames()}
+					</select>
+					Sector Size: <select name="size">
+						<option value="Null">N/A</option>
+						${sector_sizes()}
+					</select>
+				</form>
+				<br><br>
+				<p> The following allows you to view sectors that have been changed since the date you mentioned. <br>It will search from that day and then forward. So if you wan to see all sectors updated since 03-01.<br> When you put that date in, you will see every update since that specific date. <br>
+				Use two digit month and day, with a "-" in between. Example is included in the field.</p>
+				
+				<form action="" method="POST">
+					<input type="text" name="date" value="01-01">
+					<select name="status">
+						<option value="Player">Player</option>
+						<option value="Rebel">Rebel</option>
+						<option value="Centrian">Cenvi</option>
+					</select>
+					
+					
+					<input type="submit" name="submit" value="by date"><br><br>
+				</form>
+				
+				<form action="" method="POST">
+					<select name="hw">
+						${hwList()}
+					</select>
+					
+					<input type="submit" name="submit" value="hw"><br><br>
+				</form>
+
+		</fieldset>
+		
+		
+		<fieldset>
+			<legend>Scan intel:</legend>
+		<form action="" method="POST">
+			This will list either all sectors that have been scanned or have not been scanned depending on what you select.<br><br>
+			<select name="Intel">
+					<option  value="Scanned Sectors">Scanned Sectors</option>
+					<option  value="Unscanned Sectors">Unscanned Sectors</option>
+				</select> 
+			<input type="submit" name="submit" value="List Sectors"><br><br>
+
+		The following button will provide a map of what has been scanned vs what hasn't been scanned.<br><br>
+		
+		<input type="submit" name="submit" value="Map Sectors">
+		</form>
+			<br />
+		<form action="" method="POST">	
+			<input type="submit" name="submit" value="View Cenvi">
+			</form>
+			<br />
+		<form action="" method="POST">	
+			<input type="submit" name="submit" value="View Rebel">
+			</form>
+
+	</fieldset>
+		
+	</fieldset>		

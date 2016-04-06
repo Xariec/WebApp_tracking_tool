@@ -1,0 +1,20 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<h1>${self.pagename()}</h1>
+
+<div>
+
+Upload completed: <br/><br/>
+${parsing[0]} added to the database.<br/><br/>
+${parsing[1]} were duplicates.<br/><br/><br/><br/>
+
+
+</div>
+
+
+</body>
+</html>
+
+<%def name="pagename()">
+Upload
+</%def>

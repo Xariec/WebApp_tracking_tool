@@ -1,0 +1,42 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="users()">
+	%for a in range(len(site_users)):
+		<fieldset>
+			<legend>${site_users[a]['username']} Site Actions :</legend>
+					<table border = 1px solid>
+						<tr>
+							<td width="250px">Time</td><td width="250px">Action</td><td width="250px">Info</td>
+						</tr>
+						%for b in range(len(site_users[a]['updates'])):
+						<tr>
+							<td width="250px">${site_users[a]['updates'][b]['time']}</td>
+							<td width="250px">${site_users[a]['updates'][b]['action']}</td>
+							<td width="250px">${site_users[a]['updates'][b]['info']}</td>
+
+						</tr>
+						
+						%endfor
+					</table>
+		</fieldset>
+	%endfor
+</%def>
+
+<div>
+<fieldset>
+	<legend>User Activity</legend>
+		${users()} 
+
+</fieldset>
+
+</div>
+
+
+</body>
+</html>

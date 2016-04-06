@@ -1,0 +1,22 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+
+<%def name="list_sectors()">
+	%for x in range(len(sectors)): 
+		${sectors[x]['x']},${sectors[x]['y']} -- ${sectors[x]['last_update']}-- ${sectors[x]['pname']}-- ${sectors[x]['size']}<br />
+		
+	%endfor
+</%def>
+	
+
+<fieldset >
+	<legend>Sector List:</legend>
+		${list_sectors()}
+		
+</fieldset>

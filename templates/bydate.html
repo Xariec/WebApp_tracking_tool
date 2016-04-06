@@ -1,0 +1,61 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+<%def name="count()">
+	<%
+		count = 0
+		for x in query.rewind():
+			count +=1
+		endfor
+	%>
+	${count}
+</%def>
+
+
+<%def name="listSorted()">
+	<%
+		sQuery = query.rewind()
+		sQuery = sorted(sQuery, key = lambda sQuery:sQuery['size'], reverse = True)
+		
+	%>
+	%for x in sQuery:
+		<tr>
+			<td width="75px">${x['x']},${x['y']}</td>
+			<td width="150px">${x['pname']}</td>
+			<td width="150px">${x['size']}</td>
+			<td width="200px">${x['last_update']}</td>
+		</tr>		
+	%endfor
+</%def>
+	
+
+<form action="" method="POST">
+					<input type="text" name="date" value="01-01">
+					<select name="status">
+						<option value="Player">Player</option>
+						<option value="Rebel">Rebel</option>
+						<option value="Centrian">Cenvi</option>
+					</select>
+					
+					
+					<input type="submit" name="submit" value="by date"><br><br>
+				</form>
+
+<fieldset>
+	<legend>${count()} Sectors</legend>
+	<table>
+		<tr>
+			<td width="75px">X,Y</td>
+			<td width="150px">Name</td>
+			<td width="150px">Size</td>
+			<td width="200px">Last Update</td>
+		</tr>
+		${listSorted()}
+		
+	</table>
+</fieldset>

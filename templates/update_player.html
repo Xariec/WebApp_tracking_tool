@@ -1,0 +1,64 @@
+<%inherit file="base.html"/>
+
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+
+
+<%def name="options()">
+	%for x in range(len(players)):
+		<option  value="${players[x]}">${players[x]}</option>
+	%endfor
+</%def>
+
+
+
+
+<%def name="sector_map()">
+	%for a in range(len(sectors)):
+		ctx.beginPath();
+		ctx.rect(${sectors[a][0]}, ${sectors[a][1]},1,1);
+		ctx.fillStyle = 'blue';
+		ctx.fill();
+		ctx.strokeStyle = 'blue';
+		ctx.stroke();
+		
+	%endfor
+</%def>
+<table>
+<tr>
+<td width ="500px">
+<fieldset class="fieldset-auto-width">
+	<legend>View Single Player Intel
+		<form action="" method="POST">
+			<select name="player">
+				${options()}
+			</select>\
+			<input type="submit" name="submit" value="Player Intel">
+
+		</form>
+</fieldset>
+
+
+
+<fieldset class="fieldset-auto-width">
+	<legend>${pname}</legend>
+	HomeWorld: ${x},${y} <br />
+	Warps Logged : ${logged_warps} <br />
+	Sectors Logged : ${logged_sectors} <br />
+	Sector Map:<br />
+		<canvas id="player_sectors" width="470" height="470" style="border:1px solid #d3d3d3;">
+		Please open in Chrome to view map.
+		<script>
+			var c=document.getElementById("player_sectors");
+			var ctx=c.getContext("2d");
+			${sector_map()}
+		</script>
+		
+</fieldset>
+
+</td>
+</tr>
+</table>

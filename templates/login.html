@@ -1,0 +1,24 @@
+<%inherit file="base.html"/>
+${self.errormsg('__all__')}
+<style type="text/css">
+    .fieldset-auto-width {
+         display: inline-block;
+    }
+</style>
+<fieldset class="fieldset-auto-width">
+% if user is not UNDEFINED and user:
+    <p>You are logged in, please use the links on the left to navigate to the page you need.</p>
+% else:
+	<legend>Please login to continue</legend>
+    <form action="" method="POST">
+        <input type="hidden" name="next" value="${next}">
+        ${self.errormsg('username')}
+        <p><label for="username">Username : </label><input name="username" id="username" type="text"></p>
+        ${self.errormsg('password')}
+        <p><label for="password">Password : </label><input name="password" id="password" type="password"></p>  
+        <p><input name="login" type="submit" value="Login"></p>
+    </form>
+% endif
+</fieldset>
+
+
