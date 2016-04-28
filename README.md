@@ -6,3 +6,4 @@ The tool uses two daily snapshots of the player map to confirm what secotrs are 
 
 Also, it updates a database in Mongo that tracks each sector including history, details, and status.
 
+If you go to the test site, username and password is guest
